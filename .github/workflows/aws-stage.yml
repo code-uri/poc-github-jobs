@@ -28,3 +28,19 @@ jobs:
           name: job-a-output
           path: ./output
 
+  job_b:
+    needs: job_a
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download output from Job A
+        uses: actions/download-artifact@v3
+        with:
+          name: job-a-output
+          path: ./downloaded-output
+
+      - name: Use the output
+        run: cat ./downloaded-output/result.txt
+

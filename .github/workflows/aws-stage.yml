@@ -1,0 +1,30 @@
+#For the provider URL: Use https://token.actions.githubusercontent.com
+#For the "Audience": Use sts.amazonaws.com
+name: Deploy to stage environment
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - "main"
+
+# .github/workflows/workflow.yml
+jobs:
+  job_a:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run some process
+        run: |
+          mkdir -p output
+          echo "This is Job A output" > output/result.txt
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: job-a-output
+          path: ./output
+
